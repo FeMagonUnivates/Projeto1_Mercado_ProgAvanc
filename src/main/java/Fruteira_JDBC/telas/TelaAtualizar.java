@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Mercado_JDBC;
+package Fruteira_JDBC.telas;
 
+import Fruteira_JDBC.produto.Atualizar;
+import Fruteira_JDBC.produto.Listar;
 import javax.swing.table.DefaultTableModel;
 
 /**

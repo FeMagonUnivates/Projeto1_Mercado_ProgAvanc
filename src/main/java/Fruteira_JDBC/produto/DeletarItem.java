@@ -1,4 +1,4 @@
-package Mercado_JDBC;
+package Fruteira_JDBC.produto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
