@@ -4,26 +4,26 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.Atualizar;
-import Fruteira_JDBC.produto.Listar;
+import Fruteira_JDBC.produto.AtualizarProduto;
+import Fruteira_JDBC.produto.ListarTodosProdutos;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaAtualizar extends javax.swing.JFrame {
+public class TelaAtualizarCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAtualizar
      */
-    public TelaAtualizar() {
+    public TelaAtualizarCliente() {
         initComponents();
         setLocationRelativeTo(null);
 
         DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
 
-        Listar.executar(modelo);
+        ListarTodosProdutos.executar(modelo);
     }
 
     /**
@@ -148,11 +148,11 @@ public class TelaAtualizar extends javax.swing.JFrame {
     novoPreco = Double.parseDouble(txtPreco.getText());
     
 
-    Atualizar.executar(id, novoNome, novoPreco);
+    AtualizarProduto.executar(id, novoNome, novoPreco);
 
     DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
 
-    Listar.executar(modelo);
+    ListarTodosProdutos.executar(modelo);
 
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -188,20 +188,27 @@ public class TelaAtualizar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAtualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAtualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAtualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAtualizarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaAtualizar().setVisible(true);
+                new TelaAtualizarCliente().setVisible(true);
             }
         });
     }

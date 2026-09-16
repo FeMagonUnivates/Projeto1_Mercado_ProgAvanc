@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
-public class Buscar {
+public class BuscarProduto {
     
     public static void executar(String busca, DefaultTableModel modelo) {
         

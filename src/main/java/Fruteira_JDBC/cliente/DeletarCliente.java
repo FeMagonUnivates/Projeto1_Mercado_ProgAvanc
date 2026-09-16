@@ -1,11 +1,11 @@
-package Fruteira_JDBC.produto;
+package Fruteira_JDBC.cliente;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DeletarItem {
+public class DeletarCliente {
 
     public static boolean executar(int id) {
 
@@ -13,10 +13,9 @@ public class DeletarItem {
         String usuario = "postgres";
         String senha = "postgres";
 
-        String sqlDeletar = "DELETE FROM produtos WHERE id = ?";
+        String sqlDeletar = "DELETE FROM clientes WHERE id = ?";
 
-        try (Connection conexao = 
-            DriverManager.getConnection(url, usuario, senha);
+        try (Connection conexao = DriverManager.getConnection(url, usuario, senha);
             PreparedStatement pstmt = conexao.prepareStatement(sqlDeletar)) {
 
             pstmt.setInt(1, id);

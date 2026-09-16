@@ -1,4 +1,4 @@
-package Fruteira_JDBC.produto;
+package Fruteira_JDBC.cliente;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,32 +7,37 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 
-public class Listar {
+public class BuscarCliente {
     
-    public static void executar(DefaultTableModel modelo) {
+    public static void executar(String busca, DefaultTableModel modelo) {
         
         String url = "jdbc:postgresql://localhost:5432/mercado";
         String usuario = "postgres";
         String senha = "postgres";
         
-        String sqlTodos = "SELECT id, nome, preco FROM produtos";
+        String sqlBuscarUm = "SELECT id, nome, cpf FROM clientes WHERE nome ILIKE ?";
         
-        try (Connection conexao =
-            DriverManager.getConnection(url, usuario, senha);
-            PreparedStatement pstmt = conexao.prepareStatement(sqlTodos)) {
+        modelo.setRowCount(0);
+        
+        try (Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            PreparedStatement pstmt = conexao.prepareStatement(sqlBuscarUm)) {
+            
+            pstmt.setString(1, "%" + busca + "%");
             
             ResultSet rs = pstmt.executeQuery();
             
-            modelo.setRowCount(0);
-        
             while (rs.next()) {
-            
+                
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");
-                double preco = rs.getDouble("preco");
-            
-                modelo.addRow(new Object[]{id, nome, preco});
-            };
+                String cpf = rs.getString("cpf");
+
+                modelo.addRow(new Object[]{
+                    id,
+                    nome,
+                    cpf
+                });
+            }
             
         } catch (SQLException e) {
             System.out.println("Erro ao conectar.");

@@ -4,19 +4,19 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.Buscar;
+import Fruteira_JDBC.produto.BuscarProduto;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaBuscar extends javax.swing.JFrame {
+public class TelaBuscarCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaBuscar
      */
-    public TelaBuscar() {
+    public TelaBuscarCliente() {
         initComponents();
         setLocationRelativeTo(null);
         
@@ -125,7 +125,7 @@ public class TelaBuscar extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel) tblBuscar.getModel();
 
-        Buscar.executar(busca, modelo);
+        BuscarProduto.executar(busca, modelo);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -145,20 +145,27 @@ public class TelaBuscar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaBuscar().setVisible(true);
+                new TelaBuscarCliente().setVisible(true);
             }
         });
     }

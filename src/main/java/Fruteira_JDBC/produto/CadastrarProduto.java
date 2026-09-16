@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Cadastrar {
+public class CadastrarProduto {
     
     public static void executar(String nome, double preco) {
         
