@@ -1,24 +1,19 @@
 package Fruteira_JDBC.produto;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
+import Fruteira_JDBC.conexao.Conexao;
 
 public class ListarTodosProdutos {
     
     public static void executar(DefaultTableModel modelo) {
         
-        String url = "jdbc:postgresql://localhost:5432/mercado";
-        String usuario = "postgres";
-        String senha = "postgres";
-        
         String sqlTodos = "SELECT id, nome, preco FROM produtos";
         
-        try (Connection conexao =
-            DriverManager.getConnection(url, usuario, senha);
+        try (Connection conexao = Conexao.conectar();
             PreparedStatement pstmt = conexao.prepareStatement(sqlTodos)) {
             
             ResultSet rs = pstmt.executeQuery();

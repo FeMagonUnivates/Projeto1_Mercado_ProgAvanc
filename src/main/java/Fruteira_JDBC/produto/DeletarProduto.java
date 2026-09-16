@@ -1,22 +1,17 @@
 package Fruteira_JDBC.produto;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import Fruteira_JDBC.conexao.Conexao;
 
 public class DeletarProduto {
 
     public static boolean executar(int id) {
 
-        String url = "jdbc:postgresql://localhost:5432/mercado";
-        String usuario = "postgres";
-        String senha = "postgres";
-
         String sqlDeletar = "DELETE FROM produtos WHERE id = ?";
 
-        try (Connection conexao = 
-            DriverManager.getConnection(url, usuario, senha);
+        try (Connection conexao = Conexao.conectar();
             PreparedStatement pstmt = conexao.prepareStatement(sqlDeletar)) {
 
             pstmt.setInt(1, id);
