@@ -36,7 +36,7 @@ public class Cliente {
         return cpf;
     }
 
-    public void setCpf(String preco) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
     

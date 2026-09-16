@@ -1,13 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Fruteira_JDBC.venda;
 
-/**
- *
- * @author fernando.weizenmann
- */
 public class Venda {
+    
+    private int id;
+    private int clienteId;
+    private int produtoId;
+    private int quantidade;
+    
+    public Venda() {
+    
+    }
+    
+    public Venda(int id, int clienteId, int produtoId, int quantidade ) {
+        this.id = id;
+        this.clienteId = clienteId;
+        this.produtoId = produtoId;
+        this.quantidade = quantidade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(int clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public int getProdutoId() {
+        return produtoId;
+    }
+
+    public void setProdutoId(int produtoId) {
+        this.produtoId = produtoId;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
     
 }

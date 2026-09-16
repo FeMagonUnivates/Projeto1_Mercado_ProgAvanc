@@ -28,6 +28,7 @@ public class DeletarCliente {
 
         } catch (SQLException e) {
             System.out.println("Erro ao deletar.");
+            e.printStackTrace();
         }
         
         return false;
