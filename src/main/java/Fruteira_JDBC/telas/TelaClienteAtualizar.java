@@ -4,26 +4,26 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.AtualizarProduto;
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.cliente.AtualizarCliente;
+import Fruteira_JDBC.cliente.ListarTodosClientes;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaAtualizarProduto extends javax.swing.JFrame {
+public class TelaClienteAtualizar extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaAtualizar
      */
-    public TelaAtualizarProduto() {
+    public TelaClienteAtualizar() {
         initComponents();
         setLocationRelativeTo(null);
 
         DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
 
-        ListarTodosProdutos.executar(modelo);
+        ListarTodosClientes.executar(modelo);
     }
 
     /**
@@ -40,7 +40,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtPreco = new javax.swing.JTextField();
+        txtCpf = new javax.swing.JTextField();
         btnAtualizar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
@@ -54,7 +54,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Preço"
+                "ID", "Nome", "CPF"
             }
         ));
         tblAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -66,11 +66,11 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("Preço");
+        jLabel2.setText("CPF");
 
-        txtPreco.addActionListener(new java.awt.event.ActionListener() {
+        txtCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecoActionPerformed(evt);
+                txtCpfActionPerformed(evt);
             }
         });
 
@@ -98,7 +98,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-                    .addComponent(txtPreco, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +119,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -134,7 +134,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
     int linha = tblAtualizar.getSelectedRow();
     
     if (linha == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.");
+        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.");
         return;
     }
     
@@ -142,29 +142,25 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
 
     String novoNome = txtNome.getText();
 
-    double novoPreco;
+    String novoCpf = txtCpf.getText();
 
-    
-    novoPreco = Double.parseDouble(txtPreco.getText());
-    
-
-    AtualizarProduto.executar(id, novoNome, novoPreco);
+    AtualizarCliente.executar(id, novoNome, novoCpf);
 
     DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
 
-    ListarTodosProdutos.executar(modelo);
+    ListarTodosClientes.executar(modelo);
 
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoActionPerformed
+    }//GEN-LAST:event_txtCpfActionPerformed
 
     private void tblAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAtualizarMouseClicked
         int linha = tblAtualizar.getSelectedRow();
 
         txtNome.setText(tblAtualizar.getValueAt(linha, 1).toString());
-        txtPreco.setText(tblAtualizar.getValueAt(linha, 2).toString());
+        txtCpf.setText(tblAtualizar.getValueAt(linha, 2).toString());
     }//GEN-LAST:event_tblAtualizarMouseClicked
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -188,21 +184,35 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaAtualizarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteAtualizar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaAtualizarProduto().setVisible(true);
+                new TelaClienteAtualizar().setVisible(true);
             }
         });
     }
@@ -214,7 +224,7 @@ public class TelaAtualizarProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAtualizar;
+    private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }

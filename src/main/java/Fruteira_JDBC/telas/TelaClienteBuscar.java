@@ -4,19 +4,19 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.BuscarProduto;
+import Fruteira_JDBC.cliente.BuscarCliente;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaBuscarCliente extends javax.swing.JFrame {
+public class TelaClienteBuscar extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaBuscar
      */
-    public TelaBuscarCliente() {
+    public TelaClienteBuscar() {
         initComponents();
         setLocationRelativeTo(null);
         
@@ -57,7 +57,7 @@ public class TelaBuscarCliente extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Preço"
+                "ID", "Nome", "CPF"
             }
         ));
         jScrollPane1.setViewportView(tblBuscar);
@@ -125,7 +125,7 @@ public class TelaBuscarCliente extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel) tblBuscar.getModel();
 
-        BuscarProduto.executar(busca, modelo);
+        BuscarCliente.executar(busca, modelo);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -145,14 +145,22 @@ public class TelaBuscarCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteBuscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -165,7 +173,7 @@ public class TelaBuscarCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaBuscarCliente().setVisible(true);
+                new TelaClienteBuscar().setVisible(true);
             }
         });
     }

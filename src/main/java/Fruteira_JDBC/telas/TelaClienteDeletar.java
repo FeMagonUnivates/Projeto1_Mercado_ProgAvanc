@@ -4,26 +4,26 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.DeletarProduto;
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.cliente.DeletarCliente;
+import Fruteira_JDBC.cliente.ListarTodosClientes;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaDeletarCliente extends javax.swing.JFrame {
+public class TelaClienteDeletar extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaDeletar
      */
-    public TelaDeletarCliente() {
+    public TelaClienteDeletar() {
         initComponents();
         setLocationRelativeTo(null);
         
         DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
         
-        ListarTodosProdutos.executar(modelo);
+        ListarTodosClientes.executar(modelo);
     }
 
     /**
@@ -50,7 +50,7 @@ public class TelaDeletarCliente extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Preço"
+                "ID", "Nome", "CPF"
             }
         ));
         jScrollPane1.setViewportView(tblLista);
@@ -107,18 +107,18 @@ public class TelaDeletarCliente extends javax.swing.JFrame {
         int linha = tblLista.getSelectedRow();
         
         if (linha < 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.");
             return;
         }
         
         int id = (int) tblLista.getValueAt(linha, 0);
         
-        int resposta = javax.swing.JOptionPane.showConfirmDialog(this, "Quer mesmo excluir este produto?", "Sim",
+        int resposta = javax.swing.JOptionPane.showConfirmDialog(this, "Quer mesmo excluir este cliente?", "Sim",
         javax.swing.JOptionPane.YES_NO_OPTION);
         
         if (resposta == javax.swing.JOptionPane.YES_OPTION) {
 
-            DeletarProduto.executar(id);
+            DeletarCliente.executar(id);
 
             DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
 
@@ -147,14 +147,22 @@ public class TelaDeletarCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaDeletarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteDeletar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaDeletarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteDeletar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaDeletarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteDeletar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaDeletarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteDeletar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -167,7 +175,7 @@ public class TelaDeletarCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDeletarCliente().setVisible(true);
+                new TelaClienteDeletar().setVisible(true);
             }
         });
     }

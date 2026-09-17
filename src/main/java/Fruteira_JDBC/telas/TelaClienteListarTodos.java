@@ -4,25 +4,25 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.cliente.ListarTodosClientes;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaListarTodosClientes extends javax.swing.JFrame {
+public class TelaClienteListarTodos extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaListar
      */
-    public TelaListarTodosClientes() {
+    public TelaClienteListarTodos() {
         initComponents();
         setLocationRelativeTo(null);
         
         DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
         
-        ListarTodosProdutos.executar(modelo);
+        ListarTodosClientes.executar(modelo);
     }
 
     /**
@@ -105,14 +105,38 @@ public class TelaListarTodosClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaListarTodosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteListarTodos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaListarTodosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteListarTodos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaListarTodosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteListarTodos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaListarTodosClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteListarTodos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -125,7 +149,7 @@ public class TelaListarTodosClientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaListarTodosClientes().setVisible(true);
+                new TelaClienteListarTodos().setVisible(true);
             }
         });
     }

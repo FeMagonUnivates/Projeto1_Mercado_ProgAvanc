@@ -4,6 +4,14 @@
  */
 package Fruteira_JDBC.telas;
 
+import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.conexao.Conexao;
+import Fruteira_JDBC.venda.CadastrarVenda;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author fernando.weizenmann
@@ -15,7 +23,57 @@ public class TelaVenda extends javax.swing.JFrame {
      */
     public TelaVenda() {
         initComponents();
+        setLocationRelativeTo(null);
+        carregarClientes();
+        carregarProdutos();
     }
+    
+    private void carregarClientes() {
+
+        String sql = "SELECT id, nome FROM clientes";
+
+        try (Connection conexao = Conexao.conectar();
+             PreparedStatement pstmt = conexao.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            SelectCliente.removeAllItems();
+            SelectCliente.addItem("Selecione um cliente");
+
+            while (rs.next()) {
+                SelectCliente.addItem(
+                    rs.getInt("id") + " - " + rs.getString("nome")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao carregar clientes.");
+            e.printStackTrace();
+        }
+    }
+    
+    private void carregarProdutos() {
+
+        String sql = "SELECT id, nome, preco FROM produtos";
+
+        try (Connection conexao = Conexao.conectar();
+             PreparedStatement pstmt = conexao.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            SelectProduto.removeAllItems();
+            SelectProduto.addItem("Selecione um produto");
+
+            while (rs.next()) {
+                SelectProduto.addItem(
+                    rs.getInt("id") + " - " + rs.getString("nome")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao carregar produtos.");
+            e.printStackTrace();
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,21 +84,136 @@ public class TelaVenda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        SelectCliente = new javax.swing.JComboBox<>();
+        SelectProduto = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        TxtQuantidade = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        LblTotal = new javax.swing.JLabel();
+        BtnFinalizarVenda = new javax.swing.JButton();
+        BtnVoltar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Fazer uma venda");
+
+        SelectCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um cliente", "Item 2", "Item 3", "Item 4" }));
+        SelectCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectClienteActionPerformed(evt);
+            }
+        });
+
+        SelectProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um produto", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setText("Quantidade:");
+
+        jLabel3.setText("Total:  R$");
+
+        LblTotal.setText("0,00");
+
+        BtnFinalizarVenda.setText("Finalizar Venda");
+        BtnFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnFinalizarVendaActionPerformed(evt);
+            }
+        });
+
+        BtnVoltar.setText("Voltar");
+        BtnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SelectProduto, 0, 258, Short.MAX_VALUE)
+                            .addComponent(SelectCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TxtQuantidade)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LblTotal)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
+                .addComponent(SelectCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SelectProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(LblTotal))
+                .addGap(18, 18, 18)
+                .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SelectClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SelectClienteActionPerformed
+
+    private void BtnFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFinalizarVendaActionPerformed
+        
+        int clienteId = Integer.parseInt(
+            SelectCliente.getSelectedItem().toString().split(" - ")[0]
+        );
+
+        int produtoId = Integer.parseInt(
+            SelectProduto.getSelectedItem().toString().split(" - ")[0]
+        );
+
+        int quantidadeProduto;
+
+        quantidadeProduto = Integer.parseInt(TxtQuantidade.getText());         
+
+        CadastrarVenda.executar(clienteId, produtoId, quantidadeProduto);
+
+        SelectCliente.setSelectedIndex(0);
+        SelectProduto.setSelectedIndex(0);
+        TxtQuantidade.setText("");
+        LblTotal.setText("Total: R$ 0,00");
+        
+    }//GEN-LAST:event_BtnFinalizarVendaActionPerformed
+
+    private void BtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_BtnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +251,14 @@ public class TelaVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnFinalizarVenda;
+    private javax.swing.JButton BtnVoltar;
+    private javax.swing.JLabel LblTotal;
+    private javax.swing.JComboBox<String> SelectCliente;
+    private javax.swing.JComboBox<String> SelectProduto;
+    private javax.swing.JTextField TxtQuantidade;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

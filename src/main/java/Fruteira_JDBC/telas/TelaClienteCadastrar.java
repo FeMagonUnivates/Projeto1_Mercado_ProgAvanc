@@ -4,19 +4,19 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.CadastrarProduto;
+import Fruteira_JDBC.cliente.CadastrarCliente;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author fernando.weizenmann
  */
-public class TelaCadastrarProduto extends javax.swing.JFrame {
+public class TelaClienteCadastrar extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCadastra
      */
-    public TelaCadastrarProduto() {
+    public TelaClienteCadastrar() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -33,7 +33,7 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtPreco = new javax.swing.JTextField();
+        txtCpf = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         BtnCadastrar = new javax.swing.JButton();
         BtnSairCadastro = new javax.swing.JButton();
@@ -42,15 +42,9 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
 
         jLabel1.setText("Nome");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("CPF");
 
-        jLabel2.setText("Preço");
-
-        jLabel3.setText("Cadastrar item");
+        jLabel3.setText("Cadastrar cliente");
 
         BtnCadastrar.setText("Cadastrar");
         BtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,17 +67,12 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtNome)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(72, 72, 72)
-                                .addComponent(jLabel3)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(txtNome)
+                            .addComponent(jLabel2)
+                            .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                         .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -91,6 +80,10 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
                             .addComponent(BtnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BtnSairCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +97,7 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -117,33 +110,29 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
 
     private void BtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarActionPerformed
         String nome = txtNome.getText().trim();
-        String tPreco = txtPreco.getText().trim();
+        String cpf = txtCpf.getText().trim();
         
-        if (nome.isEmpty() || tPreco.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha o nome e o preço.");
+        if (nome.isEmpty() || cpf.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha o nome e o CPF.");
             return;
         }
         
-        double preco = Double.parseDouble(tPreco);
+        double preco = Double.parseDouble(cpf);
         
-        if (preco <= 0) {
-            JOptionPane.showMessageDialog(this, "Digite um valor maior que 0.");
+        if (preco <= 11) {
+            JOptionPane.showMessageDialog(this, "Digite um CPF verdadeiro.");
             return;
         }
         
-        CadastrarProduto.executar(nome, preco);
+        CadastrarCliente.executar(nome, cpf);
         
         txtNome.setText("");
-        txtPreco.setText("");
+        txtCpf.setText("");
     }//GEN-LAST:event_BtnCadastrarActionPerformed
 
     private void BtnSairCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSairCadastroActionPerformed
         this.dispose();
     }//GEN-LAST:event_BtnSairCadastroActionPerformed
-
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,14 +151,26 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteCadastrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteCadastrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteCadastrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastrarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteCadastrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -178,7 +179,7 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastrarProduto().setVisible(true);
+                new TelaClienteCadastrar().setVisible(true);
             }
         });
     }
@@ -189,7 +190,7 @@ public class TelaCadastrarProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPreco;
     // End of variables declaration//GEN-END:variables
 }
