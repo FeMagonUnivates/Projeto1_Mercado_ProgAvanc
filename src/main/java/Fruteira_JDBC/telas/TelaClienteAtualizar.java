@@ -148,6 +148,9 @@ public class TelaClienteAtualizar extends javax.swing.JFrame {
 
     DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
 
+    txtNome.setText("");
+    txtCpf.setText("");
+    
     ListarTodosClientes.executar(modelo);
 
     }//GEN-LAST:event_btnAtualizarActionPerformed

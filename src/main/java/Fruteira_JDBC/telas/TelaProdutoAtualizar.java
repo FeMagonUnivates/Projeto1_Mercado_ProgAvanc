@@ -143,14 +143,15 @@ public class TelaProdutoAtualizar extends javax.swing.JFrame {
     String novoNome = txtNome.getText();
 
     double novoPreco;
-
     
     novoPreco = Double.parseDouble(txtPreco.getText());
-    
 
     AtualizarProduto.executar(id, novoNome, novoPreco);
 
     DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+    
+    txtNome.setText("");
+    txtPreco.setText("");
 
     ListarTodosProdutos.executar(modelo);
 

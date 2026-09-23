@@ -1,22 +1,17 @@
 package Fruteira_JDBC.venda;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import Fruteira_JDBC.conexao.Conexao;
 
 public class CadastrarVenda {
     
     public static void executar(int clienteId, int produtoId, int quantidade) {
         
-        String url = "jdbc:postgresql://localhost:5432/mercado";
-        String usuario = "postgres";
-        String senha = "postgres";
-        
         String sqlCadastra = "INSERT INTO vendas (cliente_id, produto_id, quantidade) VALUES (?, ?, ?)";
         
-        try (Connection conexao =
-            DriverManager.getConnection(url, usuario, senha);
+        try (Connection conexao = Conexao.conectar();
             PreparedStatement pstmt = conexao.prepareStatement(sqlCadastra)) {
             
             pstmt.setInt(1, clienteId);
