@@ -205,6 +205,14 @@ public class TelaVenda extends javax.swing.JFrame {
                 TxtQuantidadeActionPerformed(evt);
             }
         });
+        TxtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtQuantidadeKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtQuantidadeKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Total:  R$");
 
@@ -242,25 +250,22 @@ public class TelaVenda extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SelectProduto, 0, 468, Short.MAX_VALUE)
+                    .addComponent(SelectCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TxtQuantidade)
+                    .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addGap(0, 403, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SelectProduto, 0, 468, Short.MAX_VALUE)
-                            .addComponent(SelectCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TxtQuantidade)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblTotal)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))))
+                                .addComponent(LblTotal)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -335,6 +340,14 @@ public class TelaVenda extends javax.swing.JFrame {
     private void SelectProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectProdutoActionPerformed
         calcularTotal();
     }//GEN-LAST:event_SelectProdutoActionPerformed
+
+    private void TxtQuantidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtQuantidadeKeyPressed
+        
+    }//GEN-LAST:event_TxtQuantidadeKeyPressed
+
+    private void TxtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtQuantidadeKeyReleased
+        calcularTotal();
+    }//GEN-LAST:event_TxtQuantidadeKeyReleased
 
     /**
      * @param args the command line arguments
