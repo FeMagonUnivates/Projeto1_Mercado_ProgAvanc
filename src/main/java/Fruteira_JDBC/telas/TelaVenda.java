@@ -80,12 +80,7 @@ public class TelaVenda extends javax.swing.JFrame {
     
     private void calcularTotal() {
         
-        if (SelectProduto.getSelectedIndex() == 0) {
-            LblTotal.setText("Total: R$ 0,00");
-            return;
-        }
-        
-        if (SelectProduto.getSelectedItem() == null) {
+        if (SelectProduto.getSelectedIndex() == 0 || SelectProduto.getSelectedItem() == null) {
             LblTotal.setText("Total: R$ 0,00");
             return;
         }
