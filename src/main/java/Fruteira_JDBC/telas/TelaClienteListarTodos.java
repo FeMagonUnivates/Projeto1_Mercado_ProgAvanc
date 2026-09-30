@@ -48,7 +48,7 @@ public class TelaClienteListarTodos extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Preço"
+                "ID", "Nome", "CPF"
             }
         ));
         jScrollPane1.setViewportView(tblLista);

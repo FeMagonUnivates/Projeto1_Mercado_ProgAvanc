@@ -20,6 +20,15 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    
+    private String formatarCpf(String cpf) {
+        
+        if (cpf.length() == 11) {
+            return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
+        }
+
+        return cpf;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,20 +119,19 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
 
     private void BtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastrarActionPerformed
         String nome = txtNome.getText().trim();
-        String cpf = txtCpf.getText().trim();
+        String cpf = txtCpf.getText().replaceAll("\\D", "");
         
         if (nome.isEmpty() || cpf.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha o nome e o CPF.");
             return;
         }
         
-        double preco = Double.parseDouble(cpf);
-        
-        if (preco <= 11) {
-            JOptionPane.showMessageDialog(this, "Digite um CPF verdadeiro.");
+        if (cpf. length() != 11) {
+            JOptionPane.showMessageDialog(this, "Digite um CPF com 11 números.");
             return;
         }
         
+        cpf = formatarCpf(cpf);
         CadastrarCliente.executar(nome, cpf);
         
         txtNome.setText("");
