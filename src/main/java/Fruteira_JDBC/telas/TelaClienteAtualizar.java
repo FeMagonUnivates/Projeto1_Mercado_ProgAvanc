@@ -4,8 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.AtualizarCliente;
-import Fruteira_JDBC.cliente.ListarTodosClientes;
+import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.cliente.ClienteDAO;
+import Fruteira_JDBC.cliente.ClienteDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,12 +20,23 @@ public class TelaClienteAtualizar extends javax.swing.JFrame {
      * Creates new form TelaAtualizar
      */
     public TelaClienteAtualizar() {
+        
         initComponents();
         setLocationRelativeTo(null);
-
+        
         DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+         modelo.setRowCount(0);
 
-        ListarTodosClientes.executar(modelo);
+        ClienteDAO dao = new ClienteDAOJdbc();
+        List<Cliente> clientes = dao.listarTodos();
+
+        for (int i = 0; i < clientes.size(); i++) {
+            modelo.addRow(new Object[]{
+                clientes.get(i).getId(),
+                clientes.get(i).getNome(),
+                clientes.get(i).getCpf()
+            });
+        }
     }
 
     /**
@@ -71,6 +84,11 @@ public class TelaClienteAtualizar extends javax.swing.JFrame {
         txtCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCpfActionPerformed(evt);
+            }
+        });
+        txtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpfKeyTyped(evt);
             }
         });
 
@@ -131,28 +149,42 @@ public class TelaClienteAtualizar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-    int linha = tblAtualizar.getSelectedRow();
     
-    if (linha == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.");
-        return;
-    }
-    
-    int id = Integer.parseInt(tblAtualizar.getValueAt(linha, 0).toString());
+        int linha = tblAtualizar.getSelectedRow();
 
-    String novoNome = txtNome.getText();
+        if (linha == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.");
+            return;
+        }
 
-    String novoCpf = txtCpf.getText();
+        int id = Integer.parseInt(tblAtualizar.getValueAt(linha, 0).toString());
 
-    AtualizarCliente.executar(id, novoNome, novoCpf);
+        String novoNome = txtNome.getText();
+        String novoCpf = txtCpf.getText();
 
-    DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        cliente.setNome(novoNome);
+        cliente.setCpf(novoCpf);
 
-    txtNome.setText("");
-    txtCpf.setText("");
-    
-    ListarTodosClientes.executar(modelo);
+        ClienteDAO dao = new ClienteDAOJdbc();
+        boolean sucesso = dao.atualizar(cliente);
 
+        txtNome.setText("");
+        txtCpf.setText("");
+
+        DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+        modelo.setRowCount(0);
+
+        List<Cliente> clientes = dao.listarTodos();
+
+        for (int i = 0; i < clientes.size(); i++) {
+            modelo.addRow(new Object[]{
+                clientes.get(i).getId(),
+                clientes.get(i).getNome(),
+                clientes.get(i).getCpf()
+            });
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
@@ -169,6 +201,14 @@ public class TelaClienteAtualizar extends javax.swing.JFrame {
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void txtCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) || txtCpf.getText().length() >= 11) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCpfKeyTyped
 
     /**
      * @param args the command line arguments

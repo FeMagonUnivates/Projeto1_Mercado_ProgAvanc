@@ -4,7 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.produto.ProdutoDAO;
+import Fruteira_JDBC.produto.ProdutoDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,12 +20,23 @@ public class TelaProdutoListarTodos extends javax.swing.JFrame {
      * Creates new form TelaListar
      */
     public TelaProdutoListarTodos() {
+        
         initComponents();
         setLocationRelativeTo(null);
-        
+
         DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
-        
-        ListarTodosProdutos.executar(modelo);
+        modelo.setRowCount(0);
+
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        List<Produto> produtos = dao.listarTodos();
+
+        for (int i = 0; i < produtos.size(); i++) {
+            modelo.addRow(new Object[]{
+                produtos.get(i).getId(),
+                produtos.get(i).getNome(),
+                produtos.get(i).getPreco()
+            });
+        }
     }
 
     /**

@@ -4,7 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.BuscarCliente;
+import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.cliente.ClienteDAO;
+import Fruteira_JDBC.cliente.ClienteDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -124,8 +127,18 @@ public class TelaClienteBuscar extends javax.swing.JFrame {
         String busca = txtBuscar.getText();
 
         DefaultTableModel modelo = (DefaultTableModel) tblBuscar.getModel();
+        modelo.setRowCount(0);
 
-        BuscarCliente.executar(busca, modelo);
+        ClienteDAO dao = new ClienteDAOJdbc();
+        List<Cliente> clientes = dao.buscarPorNome(busca);
+
+        for (int i = 0; i < clientes.size(); i++) {
+            modelo.addRow(new Object[]{
+                clientes.get(i).getId(),
+                clientes.get(i).getNome(),
+                clientes.get(i).getCpf()
+            });
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

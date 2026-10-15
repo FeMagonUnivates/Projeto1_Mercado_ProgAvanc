@@ -4,7 +4,9 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.CadastrarCliente;
+import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.cliente.ClienteDAO;
+import Fruteira_JDBC.cliente.ClienteDAOJdbc;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,6 +55,17 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
 
         jLabel2.setText("CPF");
 
+        txtCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCpfActionPerformed(evt);
+            }
+        });
+        txtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpfKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Cadastrar cliente");
 
         BtnCadastrar.setText("Cadastrar");
@@ -74,20 +87,17 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
                             .addComponent(txtNome)
                             .addComponent(jLabel2)
                             .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                         .addGap(0, 8, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnSairCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(BtnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnSairCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
@@ -132,7 +142,12 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
         }
         
         cpf = formatarCpf(cpf);
-        CadastrarCliente.executar(nome, cpf);
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setCpf(cpf);
+
+        ClienteDAO dao = new ClienteDAOJdbc();
+        boolean sucesso = dao.cadastrar(cliente);
         
         txtNome.setText("");
         txtCpf.setText("");
@@ -141,6 +156,18 @@ public class TelaClienteCadastrar extends javax.swing.JFrame {
     private void BtnSairCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSairCadastroActionPerformed
         this.dispose();
     }//GEN-LAST:event_BtnSairCadastroActionPerformed
+
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfActionPerformed
+
+    private void txtCpfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfKeyTyped
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c) || txtCpf.getText().length() >= 11) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCpfKeyTyped
 
     /**
      * @param args the command line arguments

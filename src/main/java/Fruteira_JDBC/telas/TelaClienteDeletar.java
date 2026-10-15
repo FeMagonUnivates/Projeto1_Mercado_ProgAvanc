@@ -4,8 +4,11 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.DeletarCliente;
-import Fruteira_JDBC.cliente.ListarTodosClientes;
+import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.cliente.ClienteDAO;
+import Fruteira_JDBC.cliente.ClienteDAOJdbc;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,12 +21,23 @@ public class TelaClienteDeletar extends javax.swing.JFrame {
      * Creates new form TelaDeletar
      */
     public TelaClienteDeletar() {
+        
         initComponents();
         setLocationRelativeTo(null);
         
         DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
-        
-        ListarTodosClientes.executar(modelo);
+         modelo.setRowCount(0);
+
+        ClienteDAO dao = new ClienteDAOJdbc();
+        List<Cliente> clientes = dao.listarTodos();
+
+        for (int i = 0; i < clientes.size(); i++) {
+            modelo.addRow(new Object[]{
+                clientes.get(i).getId(),
+                clientes.get(i).getNome(),
+                clientes.get(i).getCpf()
+            });
+        }
     }
 
     /**
@@ -104,25 +118,26 @@ public class TelaClienteDeletar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        int linha = tblLista.getSelectedRow();
         
+        int linha = tblLista.getSelectedRow();
+
         if (linha < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.");
             return;
         }
-        
-        int id = (int) tblLista.getValueAt(linha, 0);
-        
-        int resposta = javax.swing.JOptionPane.showConfirmDialog(this, "Quer mesmo excluir este cliente?", "Sim",
-        javax.swing.JOptionPane.YES_NO_OPTION);
-        
-        if (resposta == javax.swing.JOptionPane.YES_OPTION) {
 
-            DeletarCliente.executar(id);
+        int id = Integer.parseInt(tblLista.getValueAt(linha, 0).toString());
 
+        ClienteDAO dao = new ClienteDAOJdbc();
+        boolean sucesso = dao.excluir(id);
+
+        if (sucesso) {
             DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
-
             modelo.removeRow(linha);
+        } else {
+            JOptionPane.showMessageDialog(
+                this, "Não foi possível excluir o cliente. Ele possui vendas vinculadas."
+            );
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 

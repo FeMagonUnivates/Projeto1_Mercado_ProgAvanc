@@ -4,7 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.BuscarProduto;
+import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.produto.ProdutoDAO;
+import Fruteira_JDBC.produto.ProdutoDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -124,8 +127,18 @@ public class TelaProdutoBuscar extends javax.swing.JFrame {
         String busca = txtBuscar.getText();
 
         DefaultTableModel modelo = (DefaultTableModel) tblBuscar.getModel();
+        modelo.setRowCount(0);
 
-        BuscarProduto.executar(busca, modelo);
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        List<Produto> produtos = dao.buscarPorNome(busca);
+
+        for (int i = 0; i < produtos.size(); i++) {
+            modelo.addRow(new Object[]{
+                produtos.get(i).getId(),
+                produtos.get(i).getNome(),
+                produtos.get(i).getPreco()
+            });
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

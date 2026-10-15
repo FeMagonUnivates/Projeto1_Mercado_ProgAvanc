@@ -4,8 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.AtualizarProduto;
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.produto.ProdutoDAO;
+import Fruteira_JDBC.produto.ProdutoDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,8 +24,18 @@ public class TelaProdutoAtualizar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+        modelo.setRowCount(0);
 
-        ListarTodosProdutos.executar(modelo);
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        List<Produto> produtos = dao.listarTodos();
+
+        for (int i = 0; i < produtos.size(); i++) {
+            modelo.addRow(new Object[]{
+                produtos.get(i).getId(),
+                produtos.get(i).getNome(),
+                produtos.get(i).getPreco()
+            });
+        }
     }
 
     /**
@@ -131,30 +143,42 @@ public class TelaProdutoAtualizar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-    int linha = tblAtualizar.getSelectedRow();
-    
-    if (linha == -1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.");
-        return;
-    }
-    
-    int id = Integer.parseInt(tblAtualizar.getValueAt(linha, 0).toString());
+        
+        int linha = tblAtualizar.getSelectedRow();
 
-    String novoNome = txtNome.getText();
+        if (linha == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.");
+            return;
+        }
 
-    double novoPreco;
-    
-    novoPreco = Double.parseDouble(txtPreco.getText());
+        int id = Integer.parseInt(tblAtualizar.getValueAt(linha, 0).toString());
 
-    AtualizarProduto.executar(id, novoNome, novoPreco);
+        String novoNome = txtNome.getText();
+        double novoPreco = Double.parseDouble(txtPreco.getText().replace(",", "."));
 
-    DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
-    
-    txtNome.setText("");
-    txtPreco.setText("");
+        Produto produto = new Produto();
+        produto.setId(id);
+        produto.setNome(novoNome);
+        produto.setPreco(novoPreco);
 
-    ListarTodosProdutos.executar(modelo);
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        boolean sucesso = dao.atualizar(produto);
 
+        txtNome.setText("");
+        txtPreco.setText("");
+
+        DefaultTableModel modelo = (DefaultTableModel) tblAtualizar.getModel();
+        modelo.setRowCount(0);
+
+        List<Produto> produtos = dao.listarTodos();
+
+        for (int i = 0; i < produtos.size(); i++) {
+            modelo.addRow(new Object[]{
+                produtos.get(i).getId(),
+                produtos.get(i).getNome(),
+                produtos.get(i).getPreco()
+            });
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed

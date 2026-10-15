@@ -4,8 +4,10 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.DeletarProduto;
-import Fruteira_JDBC.produto.ListarTodosProdutos;
+import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.produto.ProdutoDAO;
+import Fruteira_JDBC.produto.ProdutoDAOJdbc;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,8 +24,18 @@ public class TelaProdutoDeletar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
-        
-        ListarTodosProdutos.executar(modelo);
+         modelo.setRowCount(0);
+
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        List<Produto> produtos = dao.listarTodos();
+
+        for (int i = 0; i < produtos.size(); i++) {
+            modelo.addRow(new Object[]{
+                produtos.get(i).getId(),
+                produtos.get(i).getNome(),
+                produtos.get(i).getPreco()
+            });
+        }
     }
 
     /**
@@ -104,24 +116,21 @@ public class TelaProdutoDeletar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        int linha = tblLista.getSelectedRow();
         
+        int linha = tblLista.getSelectedRow();
+
         if (linha < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Selecione um produto na tabela.");
             return;
         }
-        
-        int id = (int) tblLista.getValueAt(linha, 0);
-        
-        int resposta = javax.swing.JOptionPane.showConfirmDialog(this, "Quer mesmo excluir este produto?", "Sim",
-        javax.swing.JOptionPane.YES_NO_OPTION);
-        
-        if (resposta == javax.swing.JOptionPane.YES_OPTION) {
 
-            DeletarProduto.executar(id);
+        int id = Integer.parseInt(tblLista.getValueAt(linha, 0).toString());
 
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        boolean sucesso = dao.excluir(id);
+
+        if (sucesso) {
             DefaultTableModel modelo = (DefaultTableModel) tblLista.getModel();
-
             modelo.removeRow(linha);
         }
     }//GEN-LAST:event_btnDeletarActionPerformed

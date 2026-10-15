@@ -4,7 +4,9 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.CadastrarProduto;
+import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.produto.ProdutoDAO;
+import Fruteira_JDBC.produto.ProdutoDAOJdbc;
 import javax.swing.JOptionPane;
 
 /**
@@ -124,14 +126,21 @@ public class TelaProdutoCadastrar extends javax.swing.JFrame {
             return;
         }
         
-        double preco = Double.parseDouble(tPreco);
+        double preco;
         
+        preco = Double.parseDouble(tPreco.replace(",", "."));
+
         if (preco <= 0) {
             JOptionPane.showMessageDialog(this, "Digite um valor maior que 0.");
             return;
         }
         
-        CadastrarProduto.executar(nome, preco);
+        Produto produto = new Produto();
+        produto.setNome(nome);
+        produto.setPreco(preco);
+
+        ProdutoDAO dao = new ProdutoDAOJdbc();
+        boolean sucesso = dao.cadastrar(produto);
         
         txtNome.setText("");
         txtPreco.setText("");
