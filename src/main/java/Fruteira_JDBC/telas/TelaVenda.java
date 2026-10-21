@@ -4,13 +4,16 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.Cliente;
 import Fruteira_JDBC.conexao.Conexao;
-import Fruteira_JDBC.venda.CadastrarVenda;
+import Fruteira_JDBC.venda.Venda;
+import Fruteira_JDBC.venda.VendaDAO;
+import Fruteira_JDBC.venda.VendaDAOJdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -98,7 +101,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
             double total = preco * quantidade;
 
-            LblTotal.setText(String.format("Total: R$ %.2f", total));
+            LblTotal.setText(String.format("Total: R$ %.2f", total).replace(".", ","));
 
         } catch (NumberFormatException e) {
             LblTotal.setText("Total: R$ 0,00");
@@ -107,41 +110,18 @@ public class TelaVenda extends javax.swing.JFrame {
     
     private void carregarVendas() {
 
-    String sql = """
-        SELECT clientes.nome AS cliente, produtos.nome AS produto, vendas.quantidade, (produtos.preco * vendas.quantidade) AS total
-        FROM vendas
-        INNER JOIN clientes ON vendas.cliente_id = clientes.id
-        INNER JOIN produtos ON vendas.produto_id = produtos.id
-        """;
+        DefaultTableModel modelo =
+            (DefaultTableModel) TblVendas.getModel();
 
-    DefaultTableModel modelo = (DefaultTableModel) TblVendas.getModel();
+        modelo.setRowCount(0);
 
-    modelo.setRowCount(0);
+        VendaDAO dao = new VendaDAOJdbc();
+        List<Object[]> vendas = dao.listarTodasDetalhadas();
 
-    try (Connection conexao = Conexao.conectar();
-         PreparedStatement pstmt = conexao.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-
-        while (rs.next()) {
-
-            String cliente = rs.getString("cliente");
-            String produto = rs.getString("produto");
-            int quantidade = rs.getInt("quantidade");
-            double total = rs.getDouble("total");
-
-            modelo.addRow(new Object[]{
-                cliente,
-                produto,
-                quantidade,
-                String.format("R$ %.2f", total)
-            });
+        for (int i = 0; i < vendas.size(); i++) {
+            modelo.addRow(vendas.get(i));
         }
-
-    } catch (SQLException e) {
-        System.out.println("Erro ao carregar vendas.");
-        e.printStackTrace();
     }
-}
     
 
     /**
@@ -160,12 +140,12 @@ public class TelaVenda extends javax.swing.JFrame {
         SelectProduto = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         TxtQuantidade = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         LblTotal = new javax.swing.JLabel();
         BtnFinalizarVenda = new javax.swing.JButton();
         BtnVoltar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TblVendas = new javax.swing.JTable();
+        btnDeletar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,9 +194,7 @@ public class TelaVenda extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Total:  R$");
-
-        LblTotal.setText("0,00");
+        LblTotal.setText("Total: R$ 0,00");
 
         BtnFinalizarVenda.setText("Finalizar Venda");
         BtnFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -245,32 +223,37 @@ public class TelaVenda extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(TblVendas);
 
+        btnDeletar.setText("Deletar item");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SelectProduto, 0, 468, Short.MAX_VALUE)
-                    .addComponent(SelectCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TxtQuantidade)
-                    .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblTotal)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(192, 192, 192))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                    .addComponent(SelectProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SelectCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TxtQuantidade)
+                    .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(LblTotal))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,16 +269,16 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(LblTotal))
+                .addComponent(LblTotal)
                 .addGap(18, 18, 18)
                 .addComponent(BtnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -307,6 +290,27 @@ public class TelaVenda extends javax.swing.JFrame {
 
     private void BtnFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnFinalizarVendaActionPerformed
         
+        if (SelectCliente.getSelectedIndex() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, "Selecione um cliente."
+            );
+            return;
+        }
+        
+        if (SelectProduto.getSelectedIndex() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, "Selecione um produto."
+            );
+            return;
+        }
+        
+        if (TxtQuantidade.getText().trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, "Informe a quantidade."
+            );
+            return;
+        }
+        
         int clienteId = Integer.parseInt(
             SelectCliente.getSelectedItem().toString().split(" - ")[0]
         );
@@ -315,11 +319,16 @@ public class TelaVenda extends javax.swing.JFrame {
             SelectProduto.getSelectedItem().toString().split(" - ")[0]
         );
 
-        int quantidadeProduto;
-
-        quantidadeProduto = Integer.parseInt(TxtQuantidade.getText());         
-
-        CadastrarVenda.executar(clienteId, produtoId, quantidadeProduto);
+        int quantidadeProduto = Integer.parseInt(TxtQuantidade.getText());
+        
+        Venda venda = new Venda();
+        venda.setClienteId(clienteId);
+        venda.setProdutoId(produtoId);
+        venda.setQuantidade(quantidadeProduto);
+        
+        VendaDAO dao = new VendaDAOJdbc();
+        boolean sucesso = dao.cadastrar(venda);
+        
         carregarVendas();
 
         SelectCliente.setSelectedIndex(0);
@@ -348,6 +357,28 @@ public class TelaVenda extends javax.swing.JFrame {
     private void TxtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtQuantidadeKeyReleased
         calcularTotal();
     }//GEN-LAST:event_TxtQuantidadeKeyReleased
+
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+
+        int linha = TblVendas.getSelectedRow();
+
+        if (linha < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma venda na tabela.");
+            return;
+        }
+
+        int id = Integer.parseInt(TblVendas.getValueAt(linha, 0).toString());
+
+        VendaDAO dao = new VendaDAOJdbc();
+        boolean sucesso = dao.excluir(id);
+
+        if (sucesso) {
+            DefaultTableModel modelo = (DefaultTableModel) TblVendas.getModel();
+            modelo.removeRow(linha);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao excluir venda.");
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,9 +423,9 @@ public class TelaVenda extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> SelectProduto;
     private javax.swing.JTable TblVendas;
     private javax.swing.JTextField TxtQuantidade;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
