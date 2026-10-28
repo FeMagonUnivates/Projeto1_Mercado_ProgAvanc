@@ -110,7 +110,7 @@ public class VendaDAOJdbc implements VendaDAO {
             return pstmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Erro ao excluir cliente.");
+            System.out.println("Erro ao excluir venda.");
             e.printStackTrace();
         }
         
