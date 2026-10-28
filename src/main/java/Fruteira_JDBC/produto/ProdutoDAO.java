@@ -1,5 +1,6 @@
 package Fruteira_JDBC.produto;
 
+import Fruteira_JDBC.entidades.Produto;
 import java.util.List;
 
 public interface ProdutoDAO {

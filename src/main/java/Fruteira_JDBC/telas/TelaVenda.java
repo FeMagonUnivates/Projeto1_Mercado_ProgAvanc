@@ -5,7 +5,7 @@
 package Fruteira_JDBC.telas;
 
 import Fruteira_JDBC.conexao.Conexao;
-import Fruteira_JDBC.venda.Venda;
+import Fruteira_JDBC.entidades.Venda;
 import Fruteira_JDBC.venda.VendaDAO;
 import Fruteira_JDBC.venda.VendaDAOJdbc;
 import java.sql.Connection;

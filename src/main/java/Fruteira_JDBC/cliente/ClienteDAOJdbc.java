@@ -1,6 +1,7 @@
 
 package Fruteira_JDBC.cliente;
 
+import Fruteira_JDBC.entidades.Cliente;
 import Fruteira_JDBC.conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -4,7 +4,7 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.cliente.Cliente;
+import Fruteira_JDBC.entidades.Cliente;
 import Fruteira_JDBC.cliente.ClienteDAO;
 import Fruteira_JDBC.cliente.ClienteDAOJdbc;
 import java.util.List;

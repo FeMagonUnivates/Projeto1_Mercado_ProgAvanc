@@ -1,5 +1,6 @@
 package Fruteira_JDBC.cliente;
 
+import Fruteira_JDBC.entidades.Cliente;
 import java.util.List;
 
 public interface ClienteDAO {

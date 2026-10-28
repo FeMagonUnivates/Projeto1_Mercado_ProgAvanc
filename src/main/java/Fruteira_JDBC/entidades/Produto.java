@@ -1,4 +1,4 @@
-package Fruteira_JDBC.produto;
+package Fruteira_JDBC.entidades;
 
 public class Produto {
     

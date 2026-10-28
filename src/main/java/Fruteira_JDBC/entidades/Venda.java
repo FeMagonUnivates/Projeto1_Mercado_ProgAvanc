@@ -1,4 +1,4 @@
-package Fruteira_JDBC.venda;
+package Fruteira_JDBC.entidades;
 
 public class Venda {
     

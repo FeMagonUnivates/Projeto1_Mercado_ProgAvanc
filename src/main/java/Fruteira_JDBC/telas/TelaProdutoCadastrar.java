@@ -4,7 +4,7 @@
  */
 package Fruteira_JDBC.telas;
 
-import Fruteira_JDBC.produto.Produto;
+import Fruteira_JDBC.entidades.Produto;
 import Fruteira_JDBC.produto.ProdutoDAO;
 import Fruteira_JDBC.produto.ProdutoDAOJdbc;
 import javax.swing.JOptionPane;

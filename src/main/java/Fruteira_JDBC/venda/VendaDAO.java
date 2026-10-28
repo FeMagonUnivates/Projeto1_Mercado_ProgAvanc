@@ -1,5 +1,6 @@
 package Fruteira_JDBC.venda;
 
+import Fruteira_JDBC.entidades.Venda;
 import java.util.List;
 
 public interface VendaDAO {

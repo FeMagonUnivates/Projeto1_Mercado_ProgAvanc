@@ -1,4 +1,4 @@
-package Fruteira_JDBC.cliente;
+package Fruteira_JDBC.entidades;
 
 public class Cliente {
     
