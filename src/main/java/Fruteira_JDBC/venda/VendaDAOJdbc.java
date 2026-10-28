@@ -69,7 +69,7 @@ public class VendaDAOJdbc implements VendaDAO {
         List<Object[]> vendas = new ArrayList<>();
 
         String sqlTodos = """
-            SELECT clientes.nome AS cliente, produtos.nome AS produto, vendas.quantidade, (produtos.preco * vendas.quantidade) AS total
+            SELECT vendas.id, clientes.nome AS cliente, produtos.nome AS produto, vendas.quantidade, (produtos.preco * vendas.quantidade) AS total
                     FROM vendas
                     INNER JOIN clientes ON vendas.cliente_id = clientes.id
                     INNER JOIN produtos ON vendas.produto_id = produtos.id
@@ -81,6 +81,7 @@ public class VendaDAOJdbc implements VendaDAO {
 
             while (rs.next()) {
                 Object[] venda = {
+                    rs.getInt("id"),
                     rs.getString("cliente"),
                     rs.getString("produto"),
                     rs.getInt("quantidade"),
